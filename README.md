@@ -25,15 +25,15 @@ Try creating an invoice and you will see the new custom invoice number
 Variables
 ---------
 
-{yyyy} - Year in YYYY, 2013
-{yy} - Year in YY, 13
-{dd} - Day in DD, 29
-{d} - Day in D, 9
-{mm} - Month in MM, 09
-{mmm} - Month in MMM, JAN / APR / DEC
-{num} - Original invoice number with no padding, 8
-{num2} - Original invoice number with 2 padding, 08
-{num2} - Original invoice number with 3 padding, 008
-{num2} - Original invoice number with 4 padding, 0008
+- {yyyy} - Year in YYYY, 2013
+- {yy} - Year in YY, 13
+- {dd} - Day in DD, 29
+- {d} - Day in D, 9
+- {mm} - Month in MM, 09
+- {mmm} - Month in MMM, JAN / APR / DEC
+- {num} - Original invoice number with no padding, 8
+- {num2} - Original invoice number with 2 padding, 08
+- {num2} - Original invoice number with 3 padding, 008
+- {num2} - Original invoice number with 4 padding, 0008
 
-Developed by Kong Jin Jie @ [Aspire Designs Pte Ltd](http://www.aspiredesigns.com.sg)
+Developed by @jinjie @ [Aspire Designs Pte Ltd](http://www.aspiredesigns.com.sg)
