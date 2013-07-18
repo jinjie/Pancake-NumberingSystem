@@ -39,7 +39,7 @@ class Plugin_NumberingSystem extends Plugin {
 			'invoice_pattern'	=> array(
 				'name'	=> 'invoice_pattern',
 				'label'	=> array(
-					'en'	=> 'Invoice Pattern',
+					'en'	=> 'Invoices &amp; Estimates Pattern',
 				),
 				'type'	=> 'text',
 				'default'	=> 'FA-{yyyy}{mm}{dd}-{num4}',
@@ -84,7 +84,7 @@ class Plugin_NumberingSystem extends Plugin {
 		 * $count is passed by invoices_m which is the "real" invoice number
 		 */
 		 
-		if ($count === FALSE) {
+		if (empty($count)) {
 			// Looks like this is the first invoice, let's use invoice number 1
 			
 			$count = 1;
@@ -95,10 +95,10 @@ class Plugin_NumberingSystem extends Plugin {
 		$data = array(
 			'yyyy'		=> date('Y'),
 			'yy'		=> date('y'),
+			'mmm'		=> date('M'),
+			'mm'		=> date('m'),
 			'dd'		=> date('d'),
 			'd'			=> date('j'),
-			'mm'		=> date('m'),
-			'mmm'		=> date('M'),
 			'num'		=> $count,
 			'num2'		=> str_pad($count, 2, '0', STR_PAD_LEFT),
 			'num3'		=> str_pad($count, 2, '0', STR_PAD_LEFT),
@@ -107,9 +107,11 @@ class Plugin_NumberingSystem extends Plugin {
 		
 		$this->ci->load->library('parser');
 		
+		$invoice_string = $this->parser->parse_string($this->ci->plugins_m->get_plugin_setting('invoice_pattern'), $data, TRUE);
+		
 		// Return the custom invoice number back to invoices_m
 		
-		return $this->parser->parse_string($this->ci->plugins_m->get_plugin_setting('invoice_pattern'), $data, TRUE);
+		return $invoice_string;
 	}
 
 }
