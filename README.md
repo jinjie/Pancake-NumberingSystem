@@ -33,7 +33,7 @@ Variables
 - {mmm} - Month in MMM, JAN / APR / DEC
 - {num} - Original invoice number with no padding, 8
 - {num2} - Original invoice number with 2 padding, 08
-- {num2} - Original invoice number with 3 padding, 008
-- {num2} - Original invoice number with 4 padding, 0008
+- {num3} - Original invoice number with 3 padding, 008
+- {num4} - Original invoice number with 4 padding, 0008
 
 Developed by @jinjie [Aspire Designs Pte Ltd](http://www.aspiredesigns.com.sg)
