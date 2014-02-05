@@ -76,7 +76,18 @@ class Plugin_NumberingSystem extends Plugin {
 		 * Add more if required. :)
 		 */
 		 
+		Events::register('before_invoice_number_generated', array($this, 'before_invoice_number_generated'));
 		Events::register('invoice_number_generated', array($this, 'invoice_number_generated'));
+	}
+	
+	public function before_invoice_number_generated() {
+		// Removes all variables and dash that is used in the custom invoice pattern
+		
+		return preg_replace(
+			'/{yyyy}|{yy}|{mmm}|{mm}|{dd}|{d}|{num}|{num2}|{num3}|{num4}|-|/',
+			'',
+			$this->ci->plugins_m->get_plugin_setting('invoice_pattern')
+		);
 	}
 	
 	public function invoice_number_generated($count) {
@@ -101,8 +112,8 @@ class Plugin_NumberingSystem extends Plugin {
 			'd'			=> date('j'),
 			'num'		=> $count,
 			'num2'		=> str_pad($count, 2, '0', STR_PAD_LEFT),
-			'num3'		=> str_pad($count, 2, '0', STR_PAD_LEFT),
-			'num4'		=> str_pad($count, 2, '0', STR_PAD_LEFT),
+			'num3'		=> str_pad($count, 3, '0', STR_PAD_LEFT),
+			'num4'		=> str_pad($count, 4, '0', STR_PAD_LEFT),
 		);
 		
 		$this->ci->load->library('parser');
