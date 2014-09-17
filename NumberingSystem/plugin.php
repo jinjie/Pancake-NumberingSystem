@@ -39,10 +39,26 @@ class Plugin_NumberingSystem extends Plugin {
 			'invoice_pattern'	=> array(
 				'name'	=> 'invoice_pattern',
 				'label'	=> array(
-					'en'	=> 'Invoices &amp; Estimates Pattern',
+					'en'	=> 'Invoices Pattern',
 				),
 				'type'	=> 'text',
-				'default'	=> 'FA-{yyyy}{mm}{dd}-{num4}',
+				'default'	=> 'INV-{yyyy}{mm}{dd}-{num4}',
+			),
+			'estimate_pattern' => array(
+				'name' => 'estimate_pattern',
+				'label' => array(
+					'en' => 'Estimates Pattern'
+				),
+				'type' => 'text',
+				'default' => 'EST-{yyyy}{mm}{dd}-{num4}'
+			),
+			'credit_note_pattern' => array(
+				'name' => 'credit_note_pattern',
+				'label' => array(
+					'en' => 'Credit Notes Pattern'
+				),
+				'type' => 'text',
+				'default' => 'CN-{yyyy}{mm}{dd}-{num4}'
 			),
 		),
 	);
@@ -86,7 +102,7 @@ class Plugin_NumberingSystem extends Plugin {
 		return preg_replace(
 			'/{yyyy}|{yy}|{mmm}|{mm}|{dd}|{d}|{num}|{num2}|{num3}|{num4}|-|/',
 			'',
-			$this->ci->plugins_m->get_plugin_setting('invoice_pattern')
+			$this->ci->plugins_m->get_plugin_setting($this->_module_detect())
 		);
 	}
 	
@@ -118,11 +134,33 @@ class Plugin_NumberingSystem extends Plugin {
 		
 		$this->ci->load->library('parser');
 		
-		$invoice_string = $this->parser->parse_string($this->ci->plugins_m->get_plugin_setting('invoice_pattern'), $data, TRUE);
+		$invoice_string = $this->parser->parse_string($this->ci->plugins_m->get_plugin_setting($this->_module_detect()), $data, TRUE);
 		
 		// Return the custom invoice number back to invoices_m
 		
 		return $invoice_string;
+	}
+	
+	/**
+	 * Detect current module from the controller to support Estimates and
+	 * Credit Notes
+	 * 
+	 * @return string
+	 */
+	private function _module_detect()
+	{
+		$pattern = 'invoice_pattern';
+
+		if (($this->template->module == 'invoices' and substr($this->uri->uri_string(), 6, strlen('estimates')) == 'estimates') or ( $this->template->module == 'estimates'))
+		{
+			$pattern = 'estimate_pattern';
+		}
+		elseif (($this->template->module == 'invoices' and substr($this->uri->uri_string(), 6, strlen('credit_notes')) == 'credit_notes') or ( $this->template->module == 'credit_notes'))
+		{
+			$pattern = 'credit_note_pattern';
+		}
+		
+		return $pattern;
 	}
 
 }
