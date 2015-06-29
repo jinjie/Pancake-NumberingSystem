@@ -78,7 +78,7 @@ class Plugin_NumberingSystem extends Plugin {
 		
 		$this->ci->load->model('plugins_m');
 		
-		$this->installed = $this->ci->plugins_m->get_plugin_setting($this->alias . '_installed');
+		$this->installed = $this->get("installed");
 		
 		if ($this->installed) {
 			// Only register events when the plugin is installed
@@ -102,7 +102,7 @@ class Plugin_NumberingSystem extends Plugin {
 		return preg_replace(
 			'/{yyyy}|{yy}|{mmm}|{mm}|{dd}|{d}|{num}|{num2}|{num3}|{num4}|-|/',
 			'',
-			$this->ci->plugins_m->get_plugin_setting($this->_module_detect())
+			$this->get($this->_module_detect())
 		);
 	}
 	
@@ -134,7 +134,7 @@ class Plugin_NumberingSystem extends Plugin {
 		
 		$this->ci->load->library('parser');
 		
-		$invoice_string = $this->parser->parse_string($this->ci->plugins_m->get_plugin_setting($this->_module_detect()), $data, TRUE);
+		$invoice_string = $this->parser->parse_string($this->get($this->_module_detect()), $data, TRUE);
 		
 		// Return the custom invoice number back to invoices_m
 		
